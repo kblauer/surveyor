@@ -1,0 +1,48 @@
+{% extends "dash.html" %}
+
+{% block dashContent %}
+
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            My Surveys 
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-dashboard"></i> Dashboard
+            </li>
+        </ol>
+    </div>
+</div>
+<!-- /.row -->
+
+<br />
+
+<a href="/survey/create/">
+	<button type="button" class="btn btn-primary">Create New Survey</button> <br /><br />
+</a>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>View Survey: {{ survey.surveyName }}</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <a  class="list-group-item">
+                <i class="fa fa-fw "></i>Survey Name: {{ survey.surveyName }}
+            </a>
+            <a class="list-group-item">
+                <i class="fa fa-fw "></i>Survey Description: {{ survey.surveyDescription }}
+            </a>
+            <a class="list-group-item">
+                <i class="fa fa-fw "></i>Survey Creation Time: {{ survey.createTime }}
+            </a>
+            <a class="list-group-item">
+                <i class="fa fa-fw "></i>Survey Update Time: {{ survey.updateTime }}
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

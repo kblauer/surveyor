@@ -1,0 +1,15 @@
+# Compiled Source #
+###################
+*.com
+*.class
+*.pyc
+
+# Logs #
+########
+*.log
+
+# Additional files #
+####################
+._*
+.project
+.pydevproject

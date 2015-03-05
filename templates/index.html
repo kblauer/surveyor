@@ -1,0 +1,291 @@
+<!-- Main homepage for Surveyor.  This contains all the main content of the page
+	 and includes Django tags for extending and overwriting the 'base.html' template -->
+
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                	<img src="{% static "images/logo.png" %}" class="img-responsive" alt="logo" style="height:26px;width:26px; display:inline">
+                	Surveyor
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    <li>
+                        <a href="/services/">Services</a>
+                    </li>
+                    <li>
+                        <a href="/contact/">Contact</a>
+                    </li>
+                    
+                    <!-- This is left here as a demo of how to implement a dropdown for the navbar -->
+                    <!-- 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="portfolio-1-col.html">1 Column Portfolio</a>
+                            </li>
+                            <li>
+                                <a href="portfolio-2-col.html">2 Column Portfolio</a>
+                            </li>
+                            <li>
+                                <a href="portfolio-3-col.html">3 Column Portfolio</a>
+                            </li>
+                            <li>
+                                <a href="portfolio-4-col.html">4 Column Portfolio</a>
+                            </li>
+                            <li>
+                                <a href="portfolio-item.html">Single Portfolio Item</a>
+                            </li>
+                        </ul>
+                    </li>
+                    -->
+                    
+                    <!-- If the user is logged in, we would like to display their username and give them 
+                    	 Access to the dashboard and account information -->
+                    {% if username %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome, {{ username }}<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/dash/">User Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="/profile/edit/">My Account</a>
+                            </li>
+                            <li>
+                            	<a href="/user/logout/">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    {% else %}
+                    <!-- Begin login button on the navbar, this will dropdown an extra
+                    	 window and allow the user to fill in username and password, then
+                    	 submit the data to the server and login if verified. -->
+                    <li>
+                        <a href="javascript:;" id="loginButton"><b>Login</b></a>
+                    </li>
+                	
+                	<div id="loginBox" style="display:none;">                
+	                    <form id="loginForm" method="post" action="/user/auth/"> {% csrf_token %}
+	                        <fieldset id="body">
+	                            <fieldset>
+	                                <label for="username">Username</label>
+	                                <input type="text" name="username" id="username" />
+	                            </fieldset>
+	                            <fieldset>
+	                                <label for="password">Password</label>
+	                                <input type="password" name="password" id="password" />
+	                            </fieldset>
+	                            <input type="submit" id="login" class="btn btn-primary" value="Sign In"/><br />
+	                            <label for="checkbox"><input type="checkbox" id="checkbox" />Remember me</label>
+	                        </fieldset>
+	                        <span><a href="#">&nbsp;&nbsp;&nbsp;Forgot your password?</a></span>
+	                        {% if form.errors %}
+								<p class="error">Sorry, invalid username or password</p>
+							{% endif %}
+	                    </form>
+                	</div>
+                	
+                	{% endif %}
+                	   	
+                </ul>
+                
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    
+    {% block indexContent %}
+
+    <!-- Header Carousel -->
+    <header id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <!--  <div class="fill" style="background-image: {% static "images/slide1.jpg" %} ;"></div> -->
+                <img src="{% static "images/slide1.jpg" %}">
+                <!-- <div class="carousel-caption">
+                    <h2>Caption 1</h2>
+                </div> -->
+            </div>
+            <div class="item">
+                <!-- <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Two');"></div> -->
+                <img src="{% static "images/slide2.jpg" %}">
+                <!-- <div class="carousel-caption">
+                    <h2>Caption 2</h2>
+                </div> -->
+            </div>
+            <div class="item">
+                <!-- <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Three');"></div> -->
+                <img src="{% static "images/slide3.jpg" %}">
+                <!-- <div class="carousel-caption">
+                    <h2>Caption 3</h2>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Marketing Icons Section -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Welcome to Surveyor: Fast and Easy Survey Creation!
+                </h1>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i>Powerful Tools!</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-gift"></i> Free &amp; Open Source</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-compass"></i> Easy to Use</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
+                        <a href="#" class="btn btn-default">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Portfolio Section -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Portfolio Heading</h2>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                </a>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Call to Action Section -->
+        <div class="well">
+            <div class="row">
+                <div class="col-md-8">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum neque nemo praesentium cum alias asperiores commodi.</p>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-lg btn-default btn-block" href="#">Call to Action</a>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Surveyor:  An application by Kyle Blauer and Anthony Panettiere</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+    
+    {% endblock %}
+    
+{% endblock %}
+
+{% block scripts %}
+
+<!-- Script to Activate the Carousel -->
+<script>
+$('.carousel').carousel({
+    interval: 5000 //changes the speed
+})
+</script>
+
+<script src="{% static "js/index.js" %}"></script>
+
+{% endblock %}

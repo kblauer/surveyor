@@ -1,0 +1,70 @@
+<!-- Base HTML for Hourly.  This is essentially the general HTML5 
+	 Boilerplate, with Django tags added for functionality and easy extendability -->
+
+<!DOCTYPE html>
+
+<!-- This is a bit of django syntax that loads the staticfiles directory into django,
+	 allowing access to all of the css, js, and images that we need. -->
+{% load staticfiles %}
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hourly Homepage">
+    <meta name="author" content="Kyle Blauer, Anthony Panettiere">
+
+    <title>Surveyor | Fast and Simple Survey Creation</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    
+
+	<!-- This defines a django 'block', allowing us to define what should go in this block
+		 easily from other files.  It allows everyone to use this base boilerplate template, 
+		 and overwrite what is necessary for each page. -->
+	{% block styles %}
+	
+    <!-- Extra Homepage CSS-->
+    <link href="{% static "css/index.css" %}" rel="stylesheet">
+    
+    {% endblock %}
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+{% block content %}
+{% endblock %}
+
+{% block allScripts %}
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+{% block jquery %}
+<script src="{% static "js/jquery.js" %}"></script>
+{% endblock %}
+<script src="{% static "js/bootstrap.js" %}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
+
+<!-- Scripts block, to allow for additional scripts to be added in this spot of the HTML
+	 by other template files.  As stated above, all scripts should be placed at the end of HTML documents -->
+{% block scripts %}
+{% endblock %}
+{% endblock %}
+
+</body>
+
+</html>

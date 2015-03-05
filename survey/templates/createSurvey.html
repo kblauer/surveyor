@@ -1,0 +1,41 @@
+{% extends "dash.html" %}
+
+{% block dashContent %}
+
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            My Surveys 
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-dashboard"></i> Dashboard
+            </li>
+        </ol>
+    </div>
+</div>
+<!-- /.row -->
+
+<br />
+
+<a href="/survey/create/">
+	<button type="button" class="btn btn-primary">Create New Survey</button> <br /><br />
+</a>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>New Survey</h3>
+    </div>
+    <div class="panel-body">
+        <form action="/survey/create/" method="post">{% csrf_token %}
+        	<ul>
+        	{{ form.as_ul }}
+        	</ul>
+        	
+        <input type="submit" name="submit" value="Create Survey" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
+
+{% endblock %}
