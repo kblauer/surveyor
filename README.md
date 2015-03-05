@@ -12,7 +12,7 @@ NOTE: make sure that once you go through all of these directions, you only inter
 
 We currently have an amazon ec2 server running the newest version of the site.  
 
-You can access this website by going here: 
+You can access this website by going here: http://ec2-52-11-126-61.us-west-2.compute.amazonaws.com/
 
 Any and all testing is equivalent for this version as well as the django local servers below.  You don't really need to follow these directions, just go to the link above.
 
