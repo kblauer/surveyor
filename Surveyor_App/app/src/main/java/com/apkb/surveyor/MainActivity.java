@@ -31,6 +31,7 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private String toastText;
     private ArrayList<Integer> selected= new ArrayList<>();
 
     @Override
@@ -53,25 +54,36 @@ public class MainActivity extends ActionBarActivity
         // update the main content by replacing fragments
         Fragment fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
-        switch(position) {
-            default:
-            case 0:
-                fragment = new ViewSurveyFragment();
-                mTitle = getString(R.string.view_survey_title);
-                break;
-            case 1:
-                fragment = PlaceholderFragment.newInstance(position +1);
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 2:
-                fragment = PlaceholderFragment.newInstance(position +1);
-                mTitle = getString(R.string.title_section3);
-                break;
-        }
+
+        fragment = getNavigationItemSelected(position);
+
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .commit();
 
+    }
+
+    public Fragment getNavigationItemSelected(int position){
+        Fragment fragment;
+        switch(position) {
+            default:
+                fragment = new ViewSurveyFragment();
+                mTitle = "View Survey";
+                break;
+            case 0:
+                fragment = new ViewSurveyFragment();
+                mTitle = "View Survey";
+                break;
+            case 1:
+                fragment = PlaceholderFragment.newInstance(position +1);
+                mTitle = "Section 2";
+                break;
+            case 2:
+                fragment = PlaceholderFragment.newInstance(position +1);
+                mTitle = "Section 3";
+                break;
+        }
+        return fragment;
     }
 
 
@@ -154,29 +166,54 @@ public class MainActivity extends ActionBarActivity
         int duration = Toast.LENGTH_SHORT;
         Toast toast;
 
-        //Placeholder, display what was selected
-        if(!selected.isEmpty()){
-            switch(selected.get(0)){
-                default:
-                    toast = Toast.makeText(context, "Invalid Selection", duration);
-                    break;
-                case 0:
-                    toast = Toast.makeText(context, "Blue Submitted", duration);
-                    break;
-                case 1:
-                    toast = Toast.makeText(context, "Red Submitted", duration);
-                    break;
-                case 2:
-                    toast = Toast.makeText(context, "Green Submitted", duration);
-                    break;
-                case 3:
-                    toast = Toast.makeText(context, "Pink Submitted", duration);
-                    break;
+        getSelectedRadioButton();
+        toast = Toast.makeText(context, toastText, duration);
+        toast.show();
 
-            }
-            toast.show();
         }
 
+        public void getSelectedRadioButton(){
+            if(!selected.isEmpty()){
+                switch(selected.get(0)){
+                    default:
+                        toastText = "Invalid Selection";
+                        break;
+                    case 0:
+                        toastText = "Blue Submitted";
+                        break;
+                    case 1:
+                        toastText = "Red Submitted";
+                        break;
+                    case 2:
+                        toastText = "Green Submitted";
+                        break;
+                    case 3:
+                        toastText = "Pink Submitted";
+                        break;
+
+                }
+    }
+
+    }
+
+    public CharSequence getmTitle() {
+        return mTitle;
+    }
+
+    public void setmTitle(CharSequence mTitle) {
+        this.mTitle = mTitle;
+    }
+
+    public ArrayList<Integer> getSelected() {
+        return selected;
+    }
+
+    public void setSelected(ArrayList<Integer> selected) {
+        this.selected = selected;
+    }
+
+    public String getToastText() {
+        return toastText;
     }
 
 
