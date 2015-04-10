@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # and does not contain any information regarding questions or options.
 class Survey(models.Model):
     # The user that created the survey
-    user = models.OneToOneField(User)
+    user = models.ForeignKey(User)
     surveyName = models.CharField(max_length=50)
     surveyDescription = models.TextField()
     createTime = models.DateTimeField(auto_now_add=True)
