@@ -16,27 +16,6 @@
         android:orientation="vertical"
         android:layout_marginTop="25dp"
         android:id="@+id/survey_rg">
-
-        <!--<RadioButton android:id="@+id/radio_one"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/blue"-->
-            <!--android:onClick="onRadioButtonClicked"/>-->
-        <!--<RadioButton android:id="@+id/radio_two"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/red"-->
-            <!--android:onClick="onRadioButtonClicked"/>-->
-        <!--<RadioButton android:id="@+id/radio_three"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/green"-->
-            <!--android:onClick="onRadioButtonClicked"/>-->
-        <!--<RadioButton android:id="@+id/radio_four"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/pink"-->
-            <!--android:onClick="onRadioButtonClicked"/>-->
     </RadioGroup>
 
     <Button
