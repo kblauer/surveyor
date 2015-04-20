@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class ApplicationTest extends ApplicationTestCase<Application> {
     ArrayList<Integer> testArrayList;
     MainActivity mainActivity;
+    ViewSurveyFragment viewSurveyFragment = new ViewSurveyFragment();
     int position;
 
     public ApplicationTest() {
@@ -126,5 +127,24 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         position = -32800;
         mainActivity.getNavigationItemSelected(position);
         assertTrue(mainActivity.getmTitle().equals("View Survey"));
+    }
+
+    @Test
+    public void testParseJSON() {
+        String testString = "{\"1\": \"red\", \"2\": \"blue\", \"title\": \"testSurvey\" }";
+        String result[];
+
+        String correctResult[] = new String[5];
+        correctResult[0] = "testSurvey";
+        correctResult[1] = "red";
+        correctResult[2] = "blue";
+
+
+        ViewSurveyFragment.SurveyAsyncTask surveyAsyncTask = viewSurveyFragment.new SurveyAsyncTask();
+        result = surveyAsyncTask.parseJSON(testString);
+
+        assertEquals("Title does not match",correctResult[0], result[0]);
+        assertEquals("First option does not match",correctResult[1], result[1]);
+        assertEquals("Second option does not match",correctResult[2], result[2]);
     }
 }

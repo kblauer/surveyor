@@ -13,7 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, ViewSurveyFragment.OnFragmentInteractionListener {
+
+    private final static String TAG = "MainActivity";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -129,32 +131,26 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void onRadioButtonClicked(View view){
-        boolean checked = ((RadioButton) view).isChecked();
+        int buttonID = ((RadioGroup) view).getCheckedRadioButtonId();
+        View radioButton = ((RadioGroup) view).findViewById(buttonID);
+        int index = ((RadioGroup) view).indexOfChild(radioButton);
 
         //Check which button was clicked
-        switch(view.getId()) {
+        switch(index) {
             default:
                 selected.add(-1);
                 break;
-            case R.id.radio_one:
-                if(checked){
-                    selected.add(0, 0);
-                }
+            case 0:
+                selected.add(0, 0);
                 break;
-            case R.id.radio_two:
-                if(checked){
-                    selected.add(0, 1);
-                }
+            case 1:
+                selected.add(0, 1);
                 break;
-            case R.id.radio_three:
-                if(checked){
-                    selected.add(0, 2);
-                }
+            case 2:
+                selected.add(0, 2);
                 break;
-            case R.id.radio_four:
-                if(checked){
-                    selected.add(0, 3);
-                }
+            case 3:
+                selected.add(0, 3);
                 break;
         }
     }
@@ -252,3 +248,5 @@ public class MainActivity extends ActionBarActivity
     }
 
 }
+
+
