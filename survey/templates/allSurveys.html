@@ -35,8 +35,9 @@
     {% else %}
         <div class="list-group">
         	{% for item in surveys %}
-            <a href="/survey/get/{{ item.id }}" class="list-group-item">
+            <a href="/survey/edit/{{ item.id }}" class="list-group-item">
                 <i class="fa fa-fw fa-calendar"></i>  {{ item.surveyName }}
+                <a href="/survey/get/{{ item.id }}">View Info</a>
             </a>
             {% endfor %}
         </div>

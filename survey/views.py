@@ -1,8 +1,9 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from survey.models import Survey
 from django.http import HttpResponseRedirect
 from .forms import SurveyForm
 from django.core.context_processors import csrf
+from question.models import Question
 
 def allSurveys(request):
     user = request.user
@@ -56,3 +57,18 @@ def createSurvey(request):
     args['username'] = username
     
     return render_to_response('createSurvey.html', args)
+
+def editSurvey(request, survey_id=0):
+    user = request.user
+    username = request.user.username
+    
+    survey = Survey.objects.get(id=survey_id)
+    questions = Question.objects.filter(survey = survey)
+    
+    args = {}
+    args.update(csrf(request))
+    args['username'] = username
+    args['survey'] = survey
+    args['questions'] = questions
+    
+    return render_to_response('editSurvey.html', args)

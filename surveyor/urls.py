@@ -36,3 +36,5 @@ urlpatterns = patterns('',
     
     
 )
+
+admin.site.site_header = 'Surveyor Site Administration'
