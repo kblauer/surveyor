@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -136,6 +135,7 @@ public class ViewSurveyFragment extends Fragment {
         InputStream inputStream = null;
         String result = null;
         String resultArray[] = null;
+        TextView title;
 
         protected void onPreExecute() {
 
@@ -180,7 +180,7 @@ public class ViewSurveyFragment extends Fragment {
 
         }
 
-        private String readStream(InputStream inputStream) {
+        public String readStream(InputStream inputStream) {
             StringBuilder stringBuilder = null;
             String tempString;
             try {
@@ -218,9 +218,8 @@ public class ViewSurveyFragment extends Fragment {
             return surveyList;
         }
 
-        private void buildSurveyGUI(String [] resultArray){
-            FrameLayout surveyLayout = (FrameLayout) getView().findViewById(R.id.view_survey);
-            TextView title = (TextView)getView().findViewById(R.id.survey_title);
+        public void buildSurveyGUI(String [] resultArray){
+            title = (TextView)getView().findViewById(R.id.survey_title);
             final RadioGroup rg = (RadioGroup)getView().findViewById(R.id.survey_rg);
             View.OnClickListener radioListener = new View.OnClickListener(){
                 @Override
@@ -232,14 +231,12 @@ public class ViewSurveyFragment extends Fragment {
             //grabs title from array and changes the text in the view
             title.setText(resultArray[0]);
 
-
             for (int i = 1; i <resultArray.length ; i++) {
                 RadioButton rb = new RadioButton(getActivity());
                 rb.setId(View.generateViewId());
                 rb.setText(resultArray[i]);
                 rb.setOnClickListener(radioListener);
                 rg.addView(rb);
-
             }
         }
     }

@@ -1,11 +1,16 @@
 package com.apkb.surveyor;
 
+import android.annotation.TargetApi;
 import android.app.Application;
+import android.os.Build;
 import android.test.ApplicationTestCase;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class ApplicationTest extends ApplicationTestCase<Application> {
@@ -144,7 +149,31 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         result = surveyAsyncTask.parseJSON(testString);
 
         assertEquals("Title does not match",correctResult[0], result[0]);
-        assertEquals("First option does not match",correctResult[1], result[1]);
-        assertEquals("Second option does not match",correctResult[2], result[2]);
+        assertEquals("First option does not match", correctResult[1], result[1]);
+        assertEquals("Second option does not match", correctResult[2], result[2]);
     }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @Test
+    public void testReadStream(){
+        String testString = "Test String";
+        InputStream stream = new ByteArrayInputStream((testString.getBytes(StandardCharsets.UTF_8)));
+        ViewSurveyFragment.SurveyAsyncTask surveyAsyncTask = viewSurveyFragment.new SurveyAsyncTask();
+        String result = surveyAsyncTask.readStream(stream);
+        assertEquals(testString, result);
+    }
+
+//    @Test
+//    public void testBuildSurveyGUI(){
+//        String strings[] = new String[10];
+//        String testTitle = "Test Title";
+//        strings[0] = testTitle;
+//        strings[1] = "test 1";
+//        strings[2] = "test 2";
+//        ViewSurveyFragment.SurveyAsyncTask surveyAsyncTask = viewSurveyFragment.new SurveyAsyncTask();
+//        RadioGroup rg = surveyAsyncTask.buildSurveyGUI(strings);
+//
+//        assertEquals("Title does not match", surveyAsyncTask.title, testTitle);
+//        assertEquals("Incorrect number of radio buttons", rg.getChildCount(), 2);
+//    }
 }
