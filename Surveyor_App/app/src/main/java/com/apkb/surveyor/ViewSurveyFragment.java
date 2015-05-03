@@ -189,6 +189,10 @@ public class ViewSurveyFragment extends Fragment {
                 resultArray[3] = "Green";
                 resultArray[4] = "Pink";
             }
+
+            //sends result array to main method to be handled when submit is clicked
+            if(getActivity()!=null)
+                ((MainActivity)getActivity()).setSurveyChoices(resultArray);
         }
 
         public String readStream(InputStream inputStream) {
@@ -200,12 +204,12 @@ public class ViewSurveyFragment extends Fragment {
 
                 while ((tempString = streamReader.readLine()) != null)
                     stringBuilder.append(tempString);
+
+                return stringBuilder.toString();
             } catch (Exception e) {
                 Log.e(TAG, "Error in readStream", e);
+                return null;
             }
-
-            return stringBuilder.toString();
-
         }
 
         public String[] parseJSON(String result) {

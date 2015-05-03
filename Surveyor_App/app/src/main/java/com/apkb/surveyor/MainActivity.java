@@ -23,6 +23,7 @@ public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, ViewSurveyFragment.OnFragmentInteractionListener {
 
     private final static String TAG = "MainActivity";
+    private String surveyChoices[];
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -35,6 +36,14 @@ public class MainActivity extends ActionBarActivity
     private CharSequence mTitle;
     private String toastText;
     private ArrayList<Integer> selected= new ArrayList<>();
+
+    public String[] getSurveyChoices() {
+        return surveyChoices;
+    }
+
+    public void setSurveyChoices(String[] surveyChoices) {
+        this.surveyChoices = surveyChoices;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,16 +188,16 @@ public class MainActivity extends ActionBarActivity
                         toastText = "Invalid Selection";
                         break;
                     case 0:
-                        toastText = "Blue Submitted";
+                        toastText = surveyChoices[1]+" Submitted";
                         break;
                     case 1:
-                        toastText = "Red Submitted";
+                        toastText = surveyChoices[2]+" Submitted";
                         break;
                     case 2:
-                        toastText = "Green Submitted";
+                        toastText = surveyChoices[3]+" Submitted";
                         break;
                     case 3:
-                        toastText = "Pink Submitted";
+                        toastText = surveyChoices[4]+" Submitted";
                         break;
 
                 }

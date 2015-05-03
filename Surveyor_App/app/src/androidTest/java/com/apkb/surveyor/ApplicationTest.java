@@ -24,13 +24,13 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     @Before
-    public void setUp(){
+    public void setUp() {
         testArrayList = new ArrayList<>();
         mainActivity = new MainActivity();
     }
 
     @Test
-    public void testNoRadioSubmitPressed(){
+    public void testNoRadioSubmitPressed() {
         //tests if no radio button was selected and submit was pressed
         ArrayList<Integer> testArrayList = new ArrayList<>();
         MainActivity mainActivity = new MainActivity();
@@ -40,7 +40,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     @Test
-    public void testInvalidDataSubmitPressed(){
+    public void testInvalidDataSubmitPressed() {
         //tests if an invalid radio button value is present when submit is pressed
         testArrayList.add(0, -1);
         mainActivity.setSelected(testArrayList);
@@ -49,8 +49,11 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     @Test
-    public void testInRangeDataSubmitPressed(){
+    public void testInRangeDataSubmitPressed() {
         //tests if in range data is present when submit is pressed
+        String testData[] = new String[4];
+        testData[3]="Green";
+        mainActivity.setSurveyChoices(testData);
         testArrayList.add(0, 2);
         mainActivity.setSelected(testArrayList);
         mainActivity.getSelectedRadioButton();
@@ -58,8 +61,9 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     @Test
-    public void testAboveRangeDataSubmitPressed(){
+    public void testAboveRangeDataSubmitPressed() {
         //tests if above the range data is present when submit is pressed
+
         testArrayList.add(0, 4);
         mainActivity.setSelected(testArrayList);
         mainActivity.getSelectedRadioButton();
@@ -67,35 +71,38 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     @Test
-    public void testMultipleValuesSubmitPressed(){
+    public void testMultipleValuesSubmitPressed() {
         //tests if multiple values are present if the correct value is used when submit is pressed
-        testArrayList.add(0,1);
-        testArrayList.add(1,2);
+        String testData[] = new String[4];
+        testData[2]="Red";
+        mainActivity.setSurveyChoices(testData);
+        testArrayList.add(0, 1);
+        testArrayList.add(1, 2);
         mainActivity.setSelected(testArrayList);
         mainActivity.getSelectedRadioButton();
         assertTrue(mainActivity.getToastText().equals("Red Submitted"));
     }
 
     @Test
-    public void testLargeValueSubmitPressed(){
+    public void testLargeValueSubmitPressed() {
         //tests if an extremely large value is present when submit is pressed
-        testArrayList.add(0,32800);
+        testArrayList.add(0, 32800);
         mainActivity.setSelected(testArrayList);
         mainActivity.getSelectedRadioButton();
         assertTrue(mainActivity.getToastText().equals("Invalid Selection"));
     }
 
     @Test
-    public void testSmallValueSubmitPressed(){
+    public void testSmallValueSubmitPressed() {
         //tests if an extremely large value is present when submit is pressed
-        testArrayList.add(0,-32800);
+        testArrayList.add(0, -32800);
         mainActivity.setSelected(testArrayList);
         mainActivity.getSelectedRadioButton();
         assertTrue(mainActivity.getToastText().equals("Invalid Selection"));
     }
 
     @Test
-    public void testBelowRangePosition(){
+    public void testBelowRangePosition() {
         //tests when a position is below the boundary
         position = -1;
         mainActivity.getNavigationItemSelected(position);
@@ -103,7 +110,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     @Test
-    public void testInRangePosition(){
+    public void testInRangePosition() {
         //tests when a position is in the range
         position = 1;
         mainActivity.getNavigationItemSelected(position);
@@ -111,7 +118,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     @Test
-    public void testAboveRangePosition(){
+    public void testAboveRangePosition() {
         //tests when a position is above the range
         position = 3;
         mainActivity.getNavigationItemSelected(position);
@@ -119,7 +126,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     @Test
-    public void testLargePosition(){
+    public void testLargePosition() {
         //tests a very large position value
         position = 32800;
         mainActivity.getNavigationItemSelected(position);
@@ -127,7 +134,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     @Test
-    public void testSmallPosition(){
+    public void testSmallPosition() {
         //tests a very small position value
         position = -32800;
         mainActivity.getNavigationItemSelected(position);
@@ -148,19 +155,25 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         ViewSurveyFragment.SurveyAsyncTask surveyAsyncTask = viewSurveyFragment.new SurveyAsyncTask();
         result = surveyAsyncTask.parseJSON(testString);
 
-        assertEquals("Title does not match",correctResult[0], result[0]);
+        assertEquals("Title does not match", correctResult[0], result[0]);
         assertEquals("First option does not match", correctResult[1], result[1]);
         assertEquals("Second option does not match", correctResult[2], result[2]);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Test
-    public void testReadStream(){
+    public void testReadStream() {
+        //tests valid string
         String testString = "Test String";
         InputStream stream = new ByteArrayInputStream((testString.getBytes(StandardCharsets.UTF_8)));
         ViewSurveyFragment.SurveyAsyncTask surveyAsyncTask = viewSurveyFragment.new SurveyAsyncTask();
         String result = surveyAsyncTask.readStream(stream);
         assertEquals(testString, result);
+
+        //tests exception handling
+        InputStream nullStream = null;
+        result = surveyAsyncTask.readStream(nullStream);
+        assertEquals(result, null);
     }
 
     @Test
@@ -199,21 +212,23 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     @Test
-    public void testGetSelectedRadioButton(){
+    public void testGetSelectedRadioButton() {
         MainActivity mainActivity = new MainActivity();
         ArrayList<Integer> testSelected = new ArrayList<>(1);
+        String surveyChoices[] = {"Title", "Blue", "Red", "Pink", "Black"};
+        mainActivity.setSurveyChoices(surveyChoices);
 
         //test case 0
-        testSelected.add(0,0);
+        testSelected.add(0, 0);
         mainActivity.setSelected(testSelected);
         mainActivity.getSelectedRadioButton();
         assertEquals(mainActivity.getToastText(), "Blue Submitted");
 
         //test case 3
-        testSelected.add(0,3);
+        testSelected.add(0, 3);
         mainActivity.setSelected(testSelected);
         mainActivity.getSelectedRadioButton();
-        assertEquals(mainActivity.getToastText(), "Pink Submitted");
+        assertEquals(mainActivity.getToastText(), "Black Submitted");
     }
 
     @Test
@@ -230,7 +245,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     @Test
-    public void testDoInBackground(){
+    public void testDoInBackground() {
         ViewSurveyFragment.SurveyAsyncTask surveyAsyncTask = viewSurveyFragment.new SurveyAsyncTask();
 
         //tests valid url
@@ -244,11 +259,12 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     @Test
-    public void testParseResult(){
+    public void testParseResult() {
         ViewSurveyFragment.SurveyAsyncTask surveyAsyncTask = viewSurveyFragment.new SurveyAsyncTask();
+        MainActivity mainActivity = new MainActivity();
 
         //tests null result
-        surveyAsyncTask.result=null;
+        surveyAsyncTask.result = null;
         surveyAsyncTask.parseResult();
         assertEquals(surveyAsyncTask.resultArray[0], "Select your favorite color");
         assertEquals(surveyAsyncTask.resultArray[1], "Blue");
@@ -264,8 +280,9 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         correctResult[1] = "red";
         correctResult[2] = "blue";
 
-        assertEquals("Title does not match",correctResult[0], surveyAsyncTask.resultArray[0]);
+        assertEquals("Title does not match", correctResult[0], surveyAsyncTask.resultArray[0]);
         assertEquals("First option does not match", correctResult[1], surveyAsyncTask.resultArray[1]);
         assertEquals("Second option does not match", correctResult[2], surveyAsyncTask.resultArray[2]);
     }
+
 }
