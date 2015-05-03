@@ -163,17 +163,109 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         assertEquals(testString, result);
     }
 
-//    @Test
-//    public void testBuildSurveyGUI(){
-//        String strings[] = new String[10];
-//        String testTitle = "Test Title";
-//        strings[0] = testTitle;
-//        strings[1] = "test 1";
-//        strings[2] = "test 2";
-//        ViewSurveyFragment.SurveyAsyncTask surveyAsyncTask = viewSurveyFragment.new SurveyAsyncTask();
-//        RadioGroup rg = surveyAsyncTask.buildSurveyGUI(strings);
-//
-//        assertEquals("Title does not match", surveyAsyncTask.title, testTitle);
-//        assertEquals("Incorrect number of radio buttons", rg.getChildCount(), 2);
-//    }
+    @Test
+    public void testFindSelectedRadioButton() {
+        MainActivity mainActivity = new MainActivity();
+
+        //test default
+        mainActivity.findSelectedRadioButton(-1);
+        assertTrue(-1 == mainActivity.getSelected().get(0));
+
+        //test 0
+        mainActivity.findSelectedRadioButton(0);
+        assertTrue(0 == mainActivity.getSelected().get(0));
+
+        //test 1
+        mainActivity.findSelectedRadioButton(1);
+        assertTrue(1 == mainActivity.getSelected().get(0));
+
+        //test 2
+        mainActivity.findSelectedRadioButton(2);
+        assertTrue(2 == mainActivity.getSelected().get(0));
+
+        //test 3
+        mainActivity.findSelectedRadioButton(3);
+        assertTrue(3 == mainActivity.getSelected().get(0));
+    }
+
+    @Test
+    public void testSetTitle() {
+        MainActivity mainActivity = new MainActivity();
+        String title = "test Title";
+
+        mainActivity.setmTitle(title);
+
+        assertEquals(title, mainActivity.getmTitle());
+    }
+
+    @Test
+    public void testGetSelectedRadioButton(){
+        MainActivity mainActivity = new MainActivity();
+        ArrayList<Integer> testSelected = new ArrayList<>(1);
+
+        //test case 0
+        testSelected.add(0,0);
+        mainActivity.setSelected(testSelected);
+        mainActivity.getSelectedRadioButton();
+        assertEquals(mainActivity.getToastText(), "Blue Submitted");
+
+        //test case 3
+        testSelected.add(0,3);
+        mainActivity.setSelected(testSelected);
+        mainActivity.getSelectedRadioButton();
+        assertEquals(mainActivity.getToastText(), "Pink Submitted");
+    }
+
+    @Test
+    public void testGetNavigationItemSelected() {
+        MainActivity mainActivity = new MainActivity();
+
+        //test position 0
+        mainActivity.getNavigationItemSelected(0);
+        assertEquals(mainActivity.getmTitle(), "View Survey");
+
+        //test position 2
+        mainActivity.getNavigationItemSelected(2);
+        assertEquals(mainActivity.getmTitle(), "Section 3");
+    }
+
+    @Test
+    public void testDoInBackground(){
+        ViewSurveyFragment.SurveyAsyncTask surveyAsyncTask = viewSurveyFragment.new SurveyAsyncTask();
+
+        //tests valid url
+        surveyAsyncTask.setURLString("http://www.google.com");
+        surveyAsyncTask.doInBackground();
+
+        //tests invalid url
+        surveyAsyncTask.setURLString("1");
+        surveyAsyncTask.doInBackground();
+
+    }
+
+    @Test
+    public void testParseResult(){
+        ViewSurveyFragment.SurveyAsyncTask surveyAsyncTask = viewSurveyFragment.new SurveyAsyncTask();
+
+        //tests null result
+        surveyAsyncTask.result=null;
+        surveyAsyncTask.parseResult();
+        assertEquals(surveyAsyncTask.resultArray[0], "Select your favorite color");
+        assertEquals(surveyAsyncTask.resultArray[1], "Blue");
+        assertEquals(surveyAsyncTask.resultArray[2], "Red");
+        assertEquals(surveyAsyncTask.resultArray[3], "Green");
+        assertEquals(surveyAsyncTask.resultArray[4], "Pink");
+
+        //tests valid result
+        surveyAsyncTask.result = "{\"1\": \"red\", \"2\": \"blue\", \"title\": \"testSurvey\" }";
+        surveyAsyncTask.parseResult();
+        String correctResult[] = new String[5];
+        correctResult[0] = "testSurvey";
+        correctResult[1] = "red";
+        correctResult[2] = "blue";
+
+        assertEquals("Title does not match",correctResult[0], surveyAsyncTask.resultArray[0]);
+        assertEquals("First option does not match", correctResult[1], surveyAsyncTask.resultArray[1]);
+        assertEquals("Second option does not match", correctResult[2], surveyAsyncTask.resultArray[2]);
+    }
 }

@@ -136,6 +136,15 @@ public class ViewSurveyFragment extends Fragment {
         String result = null;
         String resultArray[] = null;
         TextView title;
+        String URLString = "http://ec2-52-11-126-61.us-west-2.compute.amazonaws.com/survey/json/1";
+        public String getURLString() {
+            return URLString;
+        }
+
+        public void setURLString(String URLString) {
+            this.URLString = URLString;
+        }
+
 
         protected void onPreExecute() {
 
@@ -145,7 +154,7 @@ public class ViewSurveyFragment extends Fragment {
         protected Void doInBackground(String... params){
             URL url;
             try{
-                url = new URL("http://ec2-52-11-126-61.us-west-2.compute.amazonaws.com/survey/json/1");
+                url = new URL(URLString);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 try{
                     inputStream = new BufferedInputStream(urlConnection.getInputStream());
@@ -165,6 +174,11 @@ public class ViewSurveyFragment extends Fragment {
 
 
         protected void onPostExecute(Void v){
+            parseResult();
+            buildSurveyGUI(resultArray);
+        }
+
+        public void parseResult(){
             if(result != null){
                 resultArray = parseJSON(result);
             } else {
@@ -175,9 +189,6 @@ public class ViewSurveyFragment extends Fragment {
                 resultArray[3] = "Green";
                 resultArray[4] = "Pink";
             }
-
-            buildSurveyGUI(resultArray);
-
         }
 
         public String readStream(InputStream inputStream) {
@@ -228,9 +239,6 @@ public class ViewSurveyFragment extends Fragment {
                 }
             };
 
-            //grabs title from array and changes the text in the view
-            title.setText(resultArray[0]);
-
             for (int i = 1; i <resultArray.length ; i++) {
                 RadioButton rb = new RadioButton(getActivity());
                 rb.setId(View.generateViewId());
@@ -238,6 +246,9 @@ public class ViewSurveyFragment extends Fragment {
                 rb.setOnClickListener(radioListener);
                 rg.addView(rb);
             }
+
+            //grabs title from array and changes the text in the view
+            title.setText(resultArray[0]);
         }
     }
 

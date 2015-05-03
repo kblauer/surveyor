@@ -134,7 +134,11 @@ public class MainActivity extends ActionBarActivity
         int buttonID = ((RadioGroup) view).getCheckedRadioButtonId();
         View radioButton = ((RadioGroup) view).findViewById(buttonID);
         int index = ((RadioGroup) view).indexOfChild(radioButton);
+        findSelectedRadioButton(index);
 
+
+    }
+    public void findSelectedRadioButton(int index) {
         //Check which button was clicked
         switch(index) {
             default:
